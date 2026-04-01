@@ -382,7 +382,15 @@
   (setq claude-code-terminal-backend 'vterm)
   (claude-code-mode)
   :bind-keymap ("C-c c" . claude-code-command-map))
+(use-package inheritenv
+    :vc (:url "https://github.com/purcell/inheritenv" :rev :newest))
 
+  (use-package claude-code
+    :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
+    :config
+    (setq claude-code-terminal-backend 'vterm)
+    (claude-code-mode)
+    :bind-keymap ("C-c c" . claude-code-command-map))
 
 ;; --------------------------------------------------
 ;; Python
