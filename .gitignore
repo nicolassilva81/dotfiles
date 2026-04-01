@@ -1,0 +1,12 @@
+elpa/
+eln-cache/
+auto-save-list/
+*~
+\#*\#
+.#*
+anaconda-mode/
+org-roam.db 
+recentf 
+places 
+bookmarks 
+projects 
