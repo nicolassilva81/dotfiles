@@ -1,6 +1,4 @@
-;; --------------------------------------------------
-;; My Functions
-;; --------------------------------------------------
+;;; My Functions
 
 (setq nico/pomodoro-timer nil)
 (setq nico/pomodoro-end-time nil)
@@ -18,7 +16,7 @@
   (setq nico/pomodoro-end-time
 	(time-add (current-time) (* 25 60)))
   (setq nico/pomodoro-timer
-	(run-with-timer 0 60 
+	(run-with-timer 0 60
 			(lambda ()
 			  (let* ((remaining (time-subtract nico/pomodoro-end-time (current-time)))
 				 (secs (floor (float-time remaining)))
@@ -31,14 +29,14 @@
 			      (message "Pomodoro: %02d:%02d remaining" mins secs)))))))
 
 
-(defun nico/pomodoro-stop () 
+(defun nico/pomodoro-stop ()
   "Cancel the running pomodoro timer"
 	 (interactive)
 	 (when nico/pomodoro-timer
 	   (cancel-timer nico/pomodoro-timer)
 	   (setq nico/pomodoro-timer nil)
 	   (message "Pomodoro stopped")))
-	   
+
 (define-minor-mode nico/pomodoro-mode
   "A simple pomodoro timer mode"
 	 :lighter " Pomo"	   ; shows in the modeline when active
@@ -76,9 +74,7 @@
 
 (add-hook 'after-save-hook 'nico/config-save)
 
-;; --------------------------------------------------
-;; My Bindings
-;; --------------------------------------------------
+;;; My Bindings
 
 ;;Scratchpad (my function)
 (global-set-key (kbd "C-c s") 'my-scratchpad)
@@ -96,9 +92,7 @@
 (setq xclip-program "xclip") ;; for terminal mode
 (setq xclip-select-enable-clipboard t)
 
-;; --------------------------------------------------
-;; Package system
-;; --------------------------------------------------
+;;; Package system
 
 (require 'package)
 
@@ -117,17 +111,13 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-;; --------------------------------------------------
-;; Clipboard
-;; --------------------------------------------------
+;;; Clipboard
 
 (use-package xclip
   :config
   (xclip-mode 1))
 
-;; --------------------------------------------------
-;; Basic UI cleanup
-;; --------------------------------------------------
+;;; Basic UI cleanup
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -162,9 +152,7 @@
 ;; Auto-revert files changed on disk (useful after git operations)
 (global-auto-revert-mode 1)
 
-;; --------------------------------------------------
-;; Font
-;; --------------------------------------------------
+;;; Font
 
 (set-face-attribute 'default nil
                     :font "JetBrainsMono"
@@ -176,9 +164,7 @@
 ;;                     :font "Calibri"
 ;;                     :height 150)
 
-;; --------------------------------------------------
-;; Theme
-;; --------------------------------------------------
+;;; Theme
 
 (use-package doom-themes
   :config
@@ -186,9 +172,7 @@
   ;; Better org fontification with doom themes
   (doom-themes-org-config))
 
-;; --------------------------------------------------
-;; Better modeline
-;; --------------------------------------------------
+;;; Better modeline
 
 (use-package doom-modeline
   :ensure t
@@ -198,27 +182,26 @@
         doom-modeline-bar-width 4
         doom-modeline-buffer-file-name-style 'truncate-with-project))
 
-;; --------------------------------------------------
-;; Icons
-;; --------------------------------------------------
+;;; Icons
 
 (use-package all-the-icons)
 
 ;; Run once manually:
 ;; M-x all-the-icons-install-fonts
 
-;; --------------------------------------------------
-;; Which-key (shows shortcuts)
-;; --------------------------------------------------
+;;; Which-key
 
 (use-package which-key
   :config
   (which-key-mode)
   (setq which-key-idle-delay 0.5))
 
-;; --------------------------------------------------
-;; Modern completion UI
-;; --------------------------------------------------
+;;; Navigation
+
+(add-hook 'emacs-lisp-mode-hook #'outline-minor-mode)
+(global-set-key (kbd "C-c o") #'consult-outline)
+
+;;; Modern completion UI
 
 (use-package vertico
   :init
@@ -243,9 +226,7 @@
          ("M-g g" . consult-goto-line)
          ("M-s r" . consult-ripgrep)))     ;; search across files (needs ripgrep)
 
-;; --------------------------------------------------
-;; File tree sidebar (toggle with C-c t)
-;; --------------------------------------------------
+;;; File tree sidebar
 
 (use-package treemacs
   :bind ("C-c t" . treemacs)
@@ -253,9 +234,7 @@
   (setq treemacs-width 30
         treemacs-is-never-other-window t))
 
-;; --------------------------------------------------
-;; Git (Magit)
-;; --------------------------------------------------
+;;; Git
 
 (use-package magit
   :bind ("C-x g" . magit-status))
@@ -267,9 +246,7 @@
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
-;; --------------------------------------------------
-;; Org Mode
-;; --------------------------------------------------
+;;; Org Mode
 
 (use-package org
   :config
@@ -296,9 +273,7 @@
   (setq org-todo-keywords
         '((sequence "TODO" "IN-PROGRESS" "REVIEW" "|" "DONE" "ARCHIVED"))))
 
-;; --------------------------------------------------
-;; Org visual improvements
-;; --------------------------------------------------
+;;; Org visual improvements
 
 (use-package org-modern
   :hook (org-mode . org-modern-mode)
@@ -306,9 +281,7 @@
   (setq org-modern-table t
         org-modern-block-fringe t))
 
-;; --------------------------------------------------
-;; Centered writing layout
-;; --------------------------------------------------
+;;; Centered writing layout
 
 (use-package visual-fill-column
   :hook (org-mode . visual-fill-column-mode)
@@ -318,9 +291,7 @@
 
 (add-hook 'org-mode-hook 'visual-line-mode)
 
-;; --------------------------------------------------
-;; Org-roam
-;; --------------------------------------------------
+;;; Org-roam
 
 (use-package org-roam
   :init
@@ -350,18 +321,14 @@
   :config
   (org-roam-db-autosync-mode))
 
-;; --------------------------------------------------
-;; Better Org-roam search
-;; --------------------------------------------------
+;;; Better Org-roam search
 
 (use-package consult-org-roam
   :after org-roam
   :config
   (consult-org-roam-mode 1))
 
-;; --------------------------------------------------
-;; Quick link creation
-;; --------------------------------------------------
+;;; Quick link creation
 
 (defun my/org-roam-link-at-point ()
   (interactive)
@@ -369,9 +336,7 @@
 
 (global-set-key (kbd "C-c l") #'my/org-roam-link-at-point)
 
-;; --------------------------------------------------
-;; Claude Emacs
-;; --------------------------------------------------
+;;; Claude Emacs
 
 (use-package inheritenv
   :vc (:url "https://github.com/purcell/inheritenv" :rev :newest))
@@ -382,19 +347,9 @@
   (setq claude-code-terminal-backend 'vterm)
   (claude-code-mode)
   :bind-keymap ("C-c c" . claude-code-command-map))
-(use-package inheritenv
-    :vc (:url "https://github.com/purcell/inheritenv" :rev :newest))
 
-  (use-package claude-code
-    :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
-    :config
-    (setq claude-code-terminal-backend 'vterm)
-    (claude-code-mode)
-    :bind-keymap ("C-c c" . claude-code-command-map))
+;;; Python
 
-;; --------------------------------------------------
-;; Python
-;; --------------------------------------------------
 ;; Autocomplete
 (use-package anaconda-mode
   :hook (python-mode . anaconda-mode))
@@ -408,14 +363,11 @@
   :config
   (add-to-list 'company-backends 'company-anaconda))
 
+;;; Terminal
 
-;; --------------------------------------------------
-;; Terminal
-;; --------------------------------------------------
 (use-package vterm)
-;; --------------------------------------------------
-;; Quick reference card (C-c ? to view)
-;; --------------------------------------------------
+
+;;; Quick reference card
 
 (defun my-keybindings ()
   "Show my custom keybindings."
@@ -429,6 +381,7 @@ Navigation
   C-s         Search in file (consult)
   M-s r       Search across files (ripgrep)
   C-c t       File tree (treemacs)
+  C-c o       Jump to section in init.el (consult-outline)
 
 Org-roam
   C-c n f     Find node
