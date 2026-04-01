@@ -250,6 +250,7 @@
 
 (use-package org
   :config
+  (require 'org-tempo) ;Added for expansion of SRC_Blocks in Org
   (setq org-directory "~/org"
         org-hide-emphasis-markers t
         org-startup-folded 'content
