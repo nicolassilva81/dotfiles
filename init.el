@@ -251,6 +251,7 @@
 (use-package org
   :config
   (require 'org-tempo) ;Added for expansion of SRC_Blocks in Org
+  (add-to-list 'org-structure-template-alist '("p" . "src python"))
   (setq org-directory "~/org"
         org-hide-emphasis-markers t
         org-startup-folded 'content
@@ -260,8 +261,9 @@
         org-src-tab-acts-natively t         ;; tab works normally in code blocks
         org-edit-src-content-indentation 0  ;; no extra indent in code blocks
         org-return-follows-link t           ;; Enter opens links
-        org-image-actual-width '(500))      ;; cap inline image width
-
+        org-image-actual-width '(500)      ;; cap inline image width
+	org-agenda-files "~/org-roam/"
+	)
   ;; Enable Python and Shell in org-babel
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -305,7 +307,14 @@
            :if-new
            (file+head "${slug}.org"
                       "#+title: ${title}\n")
-           :unnarrowed t))
+           :unnarrowed t)
+
+	  ("b" "book note" item
+	   "- %U :: %?"
+	   :target
+	   (node "Writing to learn")
+	   :unarrowed t))
+	  
 
         org-roam-dailies-capture-templates
         '(("d" "default" entry
