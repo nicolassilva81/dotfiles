@@ -155,9 +155,11 @@
 ;; Emacs default to English Locale for dates/times
 (setq system-time-locale "en_US")  
 
+;;; Dictionary                        ;; ← ADD FROM HERE
+(setq dictionary-server "localhost")
+(global-set-key (kbd "C-c d") 'dictionary-lookup-definition)
 
 ;;; Font
-
 (set-face-attribute 'default nil
                     :font "JetBrainsMono"
                     :height 140)
