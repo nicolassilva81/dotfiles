@@ -152,6 +152,10 @@
 ;; Auto-revert files changed on disk (useful after git operations)
 (global-auto-revert-mode 1)
 
+;; Emacs default to English Locale for dates/times
+(setq system-time-locale "en_US")  
+
+
 ;;; Font
 
 (set-face-attribute 'default nil
