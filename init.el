@@ -319,8 +319,51 @@
 	   "- %U :: %?"
 	   :target
 	   (node "Writing to learn")
-	   :unarrowed t))
-	  
+	   :unarrowed t)
+
+	  ("c" "contact" plain
+	   "* Details
+- Company	:: %?
+- Role		::
+- Email		::
+- Phone		::
+
+* Notes"
+	   :if-new
+	   (file+head "${slug}.org"
+		      ":PROPERTIES:\n:TYPE: contact\n:END:\n#+title: ${title}\n#+filetags: :contact:\n")
+	   :unnarrowed t)
+
+	  ("l" "client" plain
+	   "* Contacts
+
+* Deals
+
+* Notes"
+	   :if-new
+	   (file+head "${slug}.org"
+		      ":PROPERTIES:\n:TYPE: client\n:END:\n#+title: ${title}\n#+filetags: :client:\n")
+	   :unnarrowed t)
+
+	  ("x" "deal" plain
+	   "* Details
+- Client	:: %?
+- Lawyer	::
+- Stage		:: prospecting
+- Started	:: %U
+- Live		::
+- Maturity	::
+
+* Pipeline
+
+* Meeting notes
+
+* Document trail"
+	   :if-new
+	   (file+head "${slug}.org"
+		      ":PROPERTIES:\n:TYPE: deal\n:STAGE: prospecting\n:END:\n#+title: ${title}\n#+filetags: :deal:prospecting:\n")
+	   :unnarrowed t))
+	
 
         org-roam-dailies-capture-templates
         '(("d" "default" entry
